@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+    <p>
+        @if (User.Identity.Name == "admin@gmail.com")
+        {
+
+            <h1 class="text-center">
+                @Html.ActionLink("Aller a la page d'admin ", "HomeClient", "cars", null, new { @class = "page-scroll" })
+            </h1>
+        }
+        else
+        {
+
+            <h1 class="text-center">
+                @Html.ActionLink("Aller a la page d'acceuil ", "HomeClient", "cars", null, new { @class = "page-scroll" })
+            </h1>
+        }
+    </p>

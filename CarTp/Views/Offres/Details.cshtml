@@ -1,0 +1,67 @@
+﻿@model CarTp.Models.Offre
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Offre</h4>
+
+    @if (User.Identity.Name == "admin@gmail.com")
+    {
+        <input type="button" class="btn btn-primary" title="Ajouter voiture" value="Ajouter voiture" onclick="location.href='@Url.Action("addCarOffre", "Offres", new { id = Model.IdOffre })'" />
+    }
+
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.kilometrage)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.kilometrage)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.marque)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.marque)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.prix)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.prix)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.photo)
+            </dt>
+
+            <dd>
+                @if (Model.photo != null)
+                {
+                    <img src="@Model.photo" alt="" width="200" />
+                }
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.client.nom)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.client.nom)
+            </dd>
+
+        </dl>
+    </div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdOffre }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

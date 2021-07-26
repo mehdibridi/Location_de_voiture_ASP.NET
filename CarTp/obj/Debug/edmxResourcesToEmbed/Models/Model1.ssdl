@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="car">
+    <Key>
+      <PropertyRef Name="IdCar" />
+    </Key>
+    <Property Name="IdCar" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="marque" Type="nchar" MaxLength="10" />
+    <Property Name="kilometrage" Type="float" />
+    <Property Name="prix" Type="float" />
+    <Property Name="idClient" Type="nvarchar" MaxLength="128" />
+    <Property Name="photo" Type="nchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="client">
+    <Key>
+      <PropertyRef Name="IdClient" />
+    </Key>
+    <Property Name="IdClient" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="nom" Type="nchar" MaxLength="25" />
+    <Property Name="prenom" Type="nchar" MaxLength="25" />
+    <Property Name="email" Type="nvarchar" MaxLength="256" />
+    <Property Name="password" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Offre">
+    <Key>
+      <PropertyRef Name="IdOffre" />
+    </Key>
+    <Property Name="IdOffre" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="kilometrage" Type="float" />
+    <Property Name="marque" Type="nchar" MaxLength="10" />
+    <Property Name="prix" Type="float" />
+    <Property Name="photo" Type="nchar" MaxLength="250" />
+    <Property Name="idClient" Type="nvarchar" MaxLength="128" />
+  </EntityType>
+  <Association Name="FK_car_ToTable">
+    <End Role="client" Type="Self.client" Multiplicity="0..1" />
+    <End Role="car" Type="Self.car" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="IdClient" />
+      </Principal>
+      <Dependent Role="car">
+        <PropertyRef Name="idClient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Offre_ToTable">
+    <End Role="client" Type="Self.client" Multiplicity="0..1" />
+    <End Role="Offre" Type="Self.Offre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="IdClient" />
+      </Principal>
+      <Dependent Role="Offre">
+        <PropertyRef Name="idClient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Database1ModelStoreContainer">
+    <EntitySet Name="car" EntityType="Self.car" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Offre" EntityType="Self.Offre" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_car_ToTable" Association="Self.FK_car_ToTable">
+      <End Role="client" EntitySet="client" />
+      <End Role="car" EntitySet="car" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Offre_ToTable" Association="Self.FK_Offre_ToTable">
+      <End Role="client" EntitySet="client" />
+      <End Role="Offre" EntitySet="Offre" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

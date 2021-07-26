@@ -1,0 +1,79 @@
+﻿@model CarTp.Models.car
+
+@{
+    ViewBag.Title = "Details";
+}
+@{
+    var image = Model.photo;
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>car</h4>
+    <hr />
+    <div class="text-right">
+        @if (Model.idClient == null)
+        {
+
+            <input type="button" class="btn btn-primary" title="Ajouter panier" value="Ajouter panier" onclick="location.href='@Url.Action("addPanier", "cars", new { id = Model.IdCar })'" />
+        }
+        else
+        {
+            <h2  class="text-danger">Deja prise</h2>
+        }
+    </div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.marque)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.marque)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.kilometrage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.kilometrage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prix)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prix)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.photo)
+        </dt>
+
+        <dd>
+            @if (Model.photo != null)
+            {
+                <img src="@Model.photo" alt="" width="200" />
+            }
+
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.client.nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.client.nom)
+        </dd>
+
+    </dl>
+</div>
+@if (User.Identity.Name == "admin@gmail.com")
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.IdCar }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

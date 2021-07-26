@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="car">
+    <Key>
+      <PropertyRef Name="IdCar" />
+    </Key>
+    <Property Name="IdCar" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="marque" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="kilometrage" Type="Double" />
+    <Property Name="prix" Type="Double" />
+    <Property Name="idClient" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="photo" Type="String" MaxLength="250" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="client" Relationship="Self.FK_car_ToTable" FromRole="car" ToRole="client" />
+  </EntityType>
+  <EntityType Name="client">
+    <Key>
+      <PropertyRef Name="IdClient" />
+    </Key>
+    <Property Name="IdClient" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="nom" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+    <Property Name="prenom" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="car" Relationship="Self.FK_car_ToTable" FromRole="client" ToRole="car" />
+    <NavigationProperty Name="Offre" Relationship="Self.FK_Offre_ToTable" FromRole="client" ToRole="Offre" />
+  </EntityType>
+  <EntityType Name="Offre">
+    <Key>
+      <PropertyRef Name="IdOffre" />
+    </Key>
+    <Property Name="IdOffre" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kilometrage" Type="Double" />
+    <Property Name="marque" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="prix" Type="Double" />
+    <Property Name="photo" Type="String" MaxLength="250" FixedLength="true" Unicode="true" />
+    <Property Name="idClient" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="client" Relationship="Self.FK_Offre_ToTable" FromRole="Offre" ToRole="client" />
+  </EntityType>
+  <Association Name="FK_car_ToTable">
+    <End Role="client" Type="Self.client" Multiplicity="0..1" />
+    <End Role="car" Type="Self.car" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="IdClient" />
+      </Principal>
+      <Dependent Role="car">
+        <PropertyRef Name="idClient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Offre_ToTable">
+    <End Role="client" Type="Self.client" Multiplicity="0..1" />
+    <End Role="Offre" Type="Self.Offre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="IdClient" />
+      </Principal>
+      <Dependent Role="Offre">
+        <PropertyRef Name="idClient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Database1Entities4" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="car" EntityType="Self.car" />
+    <EntitySet Name="client" EntityType="Self.client" />
+    <EntitySet Name="Offre" EntityType="Self.Offre" />
+    <AssociationSet Name="FK_car_ToTable" Association="Self.FK_car_ToTable">
+      <End Role="client" EntitySet="client" />
+      <End Role="car" EntitySet="car" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Offre_ToTable" Association="Self.FK_Offre_ToTable">
+      <End Role="client" EntitySet="client" />
+      <End Role="Offre" EntitySet="Offre" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

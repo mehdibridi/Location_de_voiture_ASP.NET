@@ -1,0 +1,42 @@
+﻿@model IEnumerable<CarTp.Models.car>
+
+@{
+    ViewBag.Title = "HomeClient";
+}
+
+<h2>HomeClient</h2>
+<div class="row">
+
+
+    @foreach (var item in Model)
+    {
+
+
+        if (item.photo != null)
+        {
+            item.photo = "data:image/"
+            + Path.GetExtension(item.photo).Replace(".", "")
+            + ";base64,"
+            + Convert.ToBase64String(System.IO.File.ReadAllBytes(item.photo));
+            <div id="dataListItem" class="col-md-4">
+                <img src="@item.photo" alt="" class="img-thumbnail" /><br />
+
+                @if (Request.IsAuthenticated)
+                {
+
+                    @Html.ActionLink("Plus de detail", "Details", new { id = item.IdCar })
+                }
+                else
+                {
+                    @Html.ActionLink("Plus de detail", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+
+                }
+            </div>
+
+        }
+
+
+    }
+</div>
+
+
